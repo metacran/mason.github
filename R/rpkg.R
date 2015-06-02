@@ -141,9 +141,9 @@ build <- function(answers) {
 
 create_git_repo <- function(answers) {
   try({
-    system("git init .")
-    system("git add .")
-    system("git commit -m \"Initial commit of Mason template\"")
+    system("git init .", intern = TRUE)
+    system("git add .", intern = TRUE)
+    system("git commit -m \"Initial commit of Mason template\"", intern = TRUE)
   })
 }
 
@@ -176,12 +176,12 @@ create_gh_repo <- function(answers, token) {
   remote_ok <- try({
     cmd <- paste0("git remote add origin git@github.com:",
                   answers$gh_username, "/", answers$name, ".git")
-    system(cmd)
+    system(cmd, intern = TRUE)
   })
 
   if (!inherits(remote_ok, "try-error") && answers$push_to_github) {
     try({
-      system("git push -u origin master")
+      system("git push -u origin master", intern = TRUE)
     })
   }
 }
