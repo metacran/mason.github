@@ -116,6 +116,17 @@ build <- function(answers) {
   ## Remove LICENSE file if not needed
   if (!answers$need_license) unlink("LICENSE")
 
+  ## Remove testthat files if not used
+  if (! 'testthat' %in% answers$testing) {
+    unlink("tests/testthat.R")
+    unlink("tests/testthat", recursive = TRUE)
+  }
+
+  ## Of no testing at all, remove 'tests' dir
+  if (! length(answers$testing)) {
+    unlink("tests", recursive = TRUE)
+  }
+
   ## Create Git/GitHub repos, this must be the last one
   ## to include all changes
   if (answers$create_git_repo) {
