@@ -18,9 +18,8 @@ survey <- questions(
   author = input("Author:", default = default_author()),
   maintainer = input("Maintainer:", default = default_maintainer(answers)),
   description = input("Description:", default = answers$title),
-  license = choose("License:", licenses, default = "MIT"),
-  need_license = constant(value = answers$license %in%
-    c("MIT", "BSD_2_clause", "BSD_3_clause")),
+  license = choose("License:", licenses, default = "MIT + file LICENSE"),
+  need_license = constant(value = grepl(" file LICENSE", answers$license)),
   url = input("URL:", default = default_url(answers)),
   bugreports = input("BugReports:", default = default_bugreports(answers)),
 
@@ -53,11 +52,11 @@ survey <- questions(
   year = constant(value = format(Sys.Date(), "%Y"))
 )
 
-licenses <- c("MIT",
+licenses <- c("MIT + file LICENSE",
               "AGPL-3",
               "Artistic-2.0",
-              "BSD_2_clause",
-              "BSD_3_clause",
+              "BSD_2_clause + file LICENSE",
+              "BSD_3_clause + file LICENSE",
               "GPL-2",
               "GPL-3",
               "LGPL-2",
