@@ -19,6 +19,8 @@ survey <- questions(
   maintainer = input("Maintainer:", default = default_maintainer(answers)),
   description = input("Description:", default = answers$title),
   license = choose("License:", licenses, default = "MIT"),
+  need_license = constant(value = answers$license %in%
+    c("MIT", "BSD_2_clause", "BSD_3_clause")),
   url = input("URL:", default = default_url(answers)),
   bugreports = input("BugReports:", default = default_bugreports(answers)),
 
@@ -45,7 +47,10 @@ survey <- questions(
       a$create_git_repo && a$create_gh_repo),
 
   push_to_github = confirm("Push initial version to GitHub?",
-    default = FALSE, when = function(a) a$create_gh_repo)
+    default = FALSE, when = function(a) a$create_gh_repo),
+
+  ## Some constants
+  year = constant(value = format(Sys.Date(), "%Y"))
 )
 
 licenses <- c("MIT",
@@ -117,6 +122,9 @@ build <- function(answers) {
   if ('testthat' %in% answers$testing) {
     add_dependency("Suggests", "testthat")
   }
+
+  ## Remove LICENSE file if not needed
+  if (!answers$need_license) unlink("LICENSE")
 }
 
 create_git_repo <- function(answers) {
