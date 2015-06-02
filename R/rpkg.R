@@ -109,9 +109,7 @@ build <- function(answers) {
     ok <- create_git_repo(answers)
     if (!inherits(ok, "try-error") && answers$create_gh_repo) {
       token <- Sys.getenv("GITHUB_TOKEN")
-      if (token != "") {
-        create_gh_repo(answers, token)
-      }
+      create_gh_repo(answers, token)
     }
   }
 
@@ -133,34 +131,35 @@ create_git_repo <- function(answers) {
 
 create_gh_repo <- function(answers, token) {
 
-  url <- "https://api.github.com/user/repos"
-  auth <- c("Authorization" = paste("token", token))
-  data <- paste0('{ "name": "', answers$name, '",',
-                 '   "description": "', answers$title, '" }')
-  response <- POST(
-    url,
-    body = data,
-    add_headers("user-agent" = "https://github.com/gaborcsardi/mason",
-                'accept' = 'application/vnd.github.v3+json',
-                .headers = auth)
-  )
+  if (token != "") {
+    url <- "https://api.github.com/user/repos"
+    auth <- c("Authorization" = paste("token", token))
+    data <- paste0('{ "name": "', answers$name, '",',
+                   '   "description": "', answers$title, '" }')
+    response <- POST(
+      url,
+      body = data,
+      add_headers("user-agent" = "https://github.com/gaborcsardi/mason",
+                  'accept' = 'application/vnd.github.v3+json',
+                  .headers = auth)
+    )
 
-  sc <- status_code(response)
-  if (sc == 422) {
-    warning("GitHub repository already exists")
+    sc <- status_code(response)
+    if (sc == 422) {
+      warning("GitHub repository already exists")
 
-  } else if (sc != 201) {
-    warning("Could not create GitHub repository")
-
+    } else if (sc != 201) {
+      warning("Could not create GitHub repository")
+    }
   }
 
-  ok <- try({
+  remote_ok <- try({
     cmd <- paste0("git remote add origin git@github.com:",
                   answers$gh_username, "/", answers$name, ".git")
     system(cmd)
   })
 
-  if (!inherits(cmd, "try-error") && answers$push_to_github) {
+  if (!inherits(remote_ok, "try-error") && answers$push_to_github) {
     try({
       system("git push -u origin master")
     })
