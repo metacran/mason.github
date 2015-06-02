@@ -1,0 +1,10 @@
+Package: {{{ name }}}
+Title: {{{ title }}}
+Version: {{{ version }}}
+Author: {{{ author }}}
+Maintainer: {{{ maintainer }}}
+Description: {{{ description }}}
+License: {{{ license }}}
+LazyData: true
+URL: {{{ url }}}
+BugReports: {{{ bugreports }}}

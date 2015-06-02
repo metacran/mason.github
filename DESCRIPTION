@@ -1,8 +1,14 @@
 Package: mason.rpkg
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph)
-Depends: R (>= 3.2.0)
-License: What license is it under?
-LazyData: true
+Title: R Package Generator for Mason
+Version: 1.0.0
+Author: Gabor Csardi
+Maintainer: Gabor Csardi <csardi.gabor@gmail.com>
+Description: A generic R package generator for Mason.
+License: MIT + file LICENSE
+URL: https://github.com/gaborcsardi/mason.rpkg
+BugReports: https://github.com/gaborcsardi/mason.rpkg/issues
+Imports:
+    ask,
+    httr,
+    falsy,
+    whoami
