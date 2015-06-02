@@ -29,6 +29,8 @@ survey <- questions(
   news = confirm("NEWS.md file:", default = TRUE),
   cis = checkbox("Continuous integration:", choices = cis,
     default = c("Travis", "Appveyor")),
+  travis_shield = constant(value = 'Travis' %in% answers$cis),
+  appveyor_shield = constant(value = 'Appveyor' %in% answers$cis),
 
   ## git and GitHub stuff
   create_git_repo = confirm("Create git repo?", default = TRUE),
