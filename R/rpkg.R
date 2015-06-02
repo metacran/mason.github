@@ -6,6 +6,8 @@
 #'
 #' @export
 #' @importFrom ask questions
+#' @importFrom falsy try_quietly
+#' @importFrom whoami gh_username
 
 survey <- questions(
 
@@ -36,8 +38,12 @@ survey <- questions(
   create_git_repo = confirm("Create git repo?", default = TRUE),
   create_gh_repo = confirm("Create repo on GitHub?", default = TRUE,
     when = function(a) a$create_git_repo),
-  gh_username = input("GitHub username:", default = whoami::gh_username(),
-    when = function(a) a$create_git_repo && a$create_gh_repo),
+
+  gh_username = constant(value = try_gh_username()),
+  gh_username = input("GitHub username:", default = username(),
+    when = function(a) a$gh_username == "" &&
+      a$create_git_repo && a$create_gh_repo),
+
   push_to_github = confirm("Push initial version to GitHub?",
     default = FALSE, when = function(a) a$create_gh_repo)
 )
@@ -58,6 +64,10 @@ cis <- c("Travis", "Appveyor")
 
 #' @importFrom whoami fullname
 #' @importFrom falsy try_quietly %||%
+
+try_gh_username <- function() {
+  try_quietly(gh_username()) %||% ""
+}
 
 default_author <- function() {
   try_quietly(fullname()) %||% ""
