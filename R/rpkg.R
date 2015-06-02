@@ -82,9 +82,12 @@ default_bugreports <- function(answers) {
   paste0(answers$url, "/issues")
 }
 
+## ---------------------------------------------------------------------
+
 #' @rdname survey
 #' @export
 #' @importFrom httr POST stop_for_status
+#' @importFrom mason add_dependency
 #' @param answers The answers the builder operates on.
 
 build <- function(answers) {
@@ -98,6 +101,11 @@ build <- function(answers) {
         create_gh_repo(answers, token)
       }
     }
+  }
+
+  ## Add testthat to Suggests, if requested
+  if ('testthat' %in% answers$testing) {
+    add_dependency("Suggests", "testthat")
   }
 }
 
