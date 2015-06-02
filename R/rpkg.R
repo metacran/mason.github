@@ -108,7 +108,16 @@ default_bugreports <- function(answers) {
 
 build <- function(answers) {
 
-  ## Create Git/GitHub repos
+  ## Add testthat to Suggests, if requested
+  if ('testthat' %in% answers$testing) {
+    add_dependency("Suggests", "testthat")
+  }
+
+  ## Remove LICENSE file if not needed
+  if (!answers$need_license) unlink("LICENSE")
+
+  ## Create Git/GitHub repos, this must be the last one
+  ## to include all changes
   if (answers$create_git_repo) {
     ok <- create_git_repo(answers)
     if (!inherits(ok, "try-error") && answers$create_gh_repo) {
@@ -117,13 +126,6 @@ build <- function(answers) {
     }
   }
 
-  ## Add testthat to Suggests, if requested
-  if ('testthat' %in% answers$testing) {
-    add_dependency("Suggests", "testthat")
-  }
-
-  ## Remove LICENSE file if not needed
-  if (!answers$need_license) unlink("LICENSE")
 }
 
 create_git_repo <- function(answers) {
