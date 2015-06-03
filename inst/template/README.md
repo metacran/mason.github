@@ -18,7 +18,7 @@
 ## Installation
 
 ```r
-devtools::install_packages("{{ gh_username }}/{{ name }}")
+devtools::install_github("{{ gh_username }}/{{ name }}")
 ```
 
 ## Usage
