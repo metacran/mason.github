@@ -123,7 +123,7 @@ build <- function(answers) {
   }
 
   ## Of no testing at all, remove 'tests' dir
-  if (! length(answers$testing)) {
+  if (answers$testing == "none") {
     unlink("tests", recursive = TRUE)
   }
 
