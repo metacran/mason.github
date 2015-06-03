@@ -127,6 +127,16 @@ build <- function(answers) {
     unlink("tests", recursive = TRUE)
   }
 
+  ## Remove README file(s) if not requested
+  if (! answers$readme_rmd) {
+    unlink("README.Rmd")
+    unlink("Makefile")
+  }
+  if (! answers$readme) {
+    unlink("README.Rmd")
+    unlink("README.md")
+  }
+
   ## Create Git/GitHub repos, this must be the last one
   ## to include all changes
   if (answers$create_git_repo) {
