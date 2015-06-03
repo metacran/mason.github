@@ -137,6 +137,19 @@ build <- function(answers) {
     unlink("README.md")
   }
 
+  ## Remove NEWS.md if not requested
+  if (! answers$news) {
+    unlink("NEWS.md")
+  }
+
+  ## Remove CI files if not requested
+  if (! "Travis" %in% answers$cis) {
+    unlink(".travis.yml")
+  }
+  if (! "Appveyor" %in% answers$cis) {
+    unlink("appveyor.yml")
+  }
+
   ## Create Git/GitHub repos, this must be the last one
   ## to include all changes
   if (answers$create_git_repo) {
