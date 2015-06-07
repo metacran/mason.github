@@ -28,7 +28,7 @@ survey <- questions(
     default = 1),
   readme = confirm("README.md file:", default = TRUE),
   readme_rmd = confirm("README.Rmd file:", default = TRUE,
-    when = function(a) a$readme),
+    when = function(a) isTRUE(a$readme)),
   news = confirm("NEWS.md file:", default = TRUE),
   cis = checkbox("Continuous integration:", choices = cis,
     default = c("Travis", "Appveyor")),
@@ -38,15 +38,15 @@ survey <- questions(
   ## git and GitHub stuff
   create_git_repo = confirm("Create git repo?", default = TRUE),
   create_gh_repo = confirm("Create repo on GitHub?", default = TRUE,
-    when = function(a) a$create_git_repo),
+    when = function(a) isTRUE(a$create_git_repo)),
 
   gh_username = constant(value = try_gh_username()),
   gh_username = input("GitHub username:", default = username(),
     when = function(a) a$gh_username == "" &&
-      a$create_git_repo && a$create_gh_repo),
+      isTRUE(a$create_git_repo) && isTRUE(a$create_gh_repo)),
 
   push_to_github = confirm("Push initial version to GitHub?",
-    default = FALSE, when = function(a) a$create_gh_repo),
+    default = FALSE, when = function(a) isTRUE(a$create_gh_repo)),
 
   ## Some constants
   year = constant(value = format(Sys.Date(), "%Y"))
