@@ -114,7 +114,7 @@ build <- function(answers) {
   }
 
   ## Remove LICENSE file if not needed
-  if (!answers$need_license) unlink("LICENSE")
+  if (! isTRUE(answers$need_license)) unlink("LICENSE")
 
   ## Remove testthat files if not used
   if (! 'testthat' %in% answers$testing) {
@@ -128,17 +128,17 @@ build <- function(answers) {
   }
 
   ## Remove README file(s) if not requested
-  if (! answers$readme_rmd) {
+  if (! isTRUE(answers$readme_rmd)) {
     unlink("README.Rmd")
     unlink("Makefile")
   }
-  if (! answers$readme) {
+  if (! isTRUE(answers$readme)) {
     unlink("README.Rmd")
     unlink("README.md")
   }
 
   ## Remove NEWS.md if not requested
-  if (! answers$news) {
+  if (! isTRUE(answers$news)) {
     unlink("NEWS.md")
   }
 
@@ -152,9 +152,9 @@ build <- function(answers) {
 
   ## Create Git/GitHub repos, this must be the last one
   ## to include all changes
-  if (answers$create_git_repo) {
+  if (isTRUE(answers$create_git_repo)) {
     ok <- create_git_repo(answers)
-    if (!inherits(ok, "try-error") && answers$create_gh_repo) {
+    if (!inherits(ok, "try-error") && isTRUE(answers$create_gh_repo)) {
       token <- Sys.getenv("GITHUB_TOKEN")
       create_gh_repo(answers, token)
     }
@@ -202,7 +202,7 @@ create_gh_repo <- function(answers, token) {
     system(cmd, intern = TRUE)
   })
 
-  if (!inherits(remote_ok, "try-error") && answers$push_to_github) {
+  if (!inherits(remote_ok, "try-error") && isTRUE(answers$push_to_github)) {
     try({
       system("git push -u origin master", intern = TRUE)
     })
