@@ -150,6 +150,11 @@ build <- function(answers) {
     unlink("appveyor.yml")
   }
 
+  ## Remove .gitignore if no git repo is created
+  if (! isTRUE(answers$create_git_repo)) {
+    unlink(".gitignore")
+  }
+
   ## Create Git/GitHub repos, this must be the last one
   ## to include all changes
   if (isTRUE(answers$create_git_repo)) {
