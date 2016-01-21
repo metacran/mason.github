@@ -3,6 +3,10 @@
 
 > Template for an R package on GitHub, for [Mason](https://github.com/metacran/mason).
 
+A Mason template for an R package that is developed at GitHub. It includes
+configuration, files for continuous integration, badges for CIs and CRAN
+versions, README files, a NEWS file.
+
 ## Installation
 
 This package needs Mason, so please go to
