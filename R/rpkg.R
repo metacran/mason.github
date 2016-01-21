@@ -12,16 +12,18 @@
 survey <- questions(
 
   ## DESCRIPTION file
-  name = input("Name:", default = basename(getwd())),
-  title = input("Title:", default = answers$name),
-  version = input("Version:", default = "1.0.0"),
+  name = input("Package name:", default = basename(getwd()),
+    nextline = FALSE),
+  title = input("Title:", default = answers$name, nextline = FALSE),
+  version = input("Version:", default = "1.0.0", nextline = FALSE),
   author = input("Author:", default = default_author()),
   maintainer = input("Maintainer:", default = default_maintainer(answers)),
   description = input("Description:", default = answers$title),
   license = choose("License:", licenses, default = "MIT + file LICENSE"),
   need_license = constant(value = grepl(" file LICENSE", answers$license)),
 
-  gh_username = input("GitHub username:", default = username()),
+  gh_username = input("GitHub username:", default = username(),
+    nextline = FALSE),
 
   url = input("URL:", default = default_url(answers)),
   bugreports = input("BugReports:", default = default_bugreports(answers)),
