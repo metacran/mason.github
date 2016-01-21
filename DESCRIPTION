@@ -1,12 +1,12 @@
-Package: mason.rpkg
+Package: mason.github
 Title: R Package Generator for Mason
 Version: 1.0.0
 Author: Gabor Csardi
 Maintainer: Gabor Csardi <csardi.gabor@gmail.com>
 Description: A generic R package generator for Mason.
 License: MIT + file LICENSE
-URL: https://github.com/gaborcsardi/mason.rpkg
-BugReports: https://github.com/gaborcsardi/mason.rpkg/issues
+URL: https://github.com/gaborcsardi/mason.github
+BugReports: https://github.com/gaborcsardi/mason.github/issues
 Imports:
     ask,
     httr,
