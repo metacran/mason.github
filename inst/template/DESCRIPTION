@@ -8,3 +8,4 @@ License: {{{ license }}}
 LazyData: true
 URL: {{{ url }}}
 BugReports: {{{ bugreports }}}
+RoxygenNote: {{{ roxygenversion }}}

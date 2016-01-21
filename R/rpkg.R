@@ -53,7 +53,8 @@ survey <- questions(
     default = FALSE, when = function(a) isTRUE(a$create_gh_repo)),
 
   ## Some constants
-  year = constant(value = format(Sys.Date(), "%Y"))
+  year = constant(value = format(Sys.Date(), "%Y")),
+  roxygenversion = constant(value = get_roxygen_version())
 )
 
 licenses <- c("MIT + file LICENSE",
@@ -100,6 +101,19 @@ default_url <- function(answers) {
 
 default_bugreports <- function(answers) {
   paste0(answers$url, "/issues")
+}
+
+get_roxygen_version <- function() {
+  if (is_package_installed("roxygen2")) {
+    packageDescription("roxygen2")$Version
+  } else {
+    "5.0.1"
+  }
+}
+
+is_package_installed <- function(pkg) {
+  x <- suppressWarnings(packageDescription(pkg))
+  is(x, "packageDescription")
 }
 
 ## ---------------------------------------------------------------------
