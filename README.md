@@ -9,13 +9,10 @@ versions, README files, a NEWS file.
 
 ## Installation
 
-This package needs Mason, so please go to
-https://github.com/gaborcsardi/mason and install that first.
-Then install this package with
+Then install this package from GitHub, with the `devtools` package:
 
 ```r
-library(devtools)
-install_github("gaborcsardi/mason.github")
+devtools::install_github("gaborcsardi/mason.github")
 ```
 
 ## Usage
