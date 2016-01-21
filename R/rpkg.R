@@ -7,7 +7,7 @@
 #' @export
 #' @importFrom ask questions
 #' @importFrom falsy try_quietly
-#' @importFrom whoami gh_username
+#' @importFrom whoami gh_username username
 
 survey <- questions(
 
@@ -20,6 +20,9 @@ survey <- questions(
   description = input("Description:", default = answers$title),
   license = choose("License:", licenses, default = "MIT + file LICENSE"),
   need_license = constant(value = grepl(" file LICENSE", answers$license)),
+
+  gh_username = input("GitHub username:", default = username()),
+
   url = input("URL:", default = default_url(answers)),
   bugreports = input("BugReports:", default = default_bugreports(answers)),
 
@@ -39,11 +42,6 @@ survey <- questions(
   create_git_repo = confirm("Create git repo?", default = TRUE),
   create_gh_repo = confirm("Create repo on GitHub?", default = TRUE,
     when = function(a) isTRUE(a$create_git_repo)),
-
-  gh_username = constant(value = try_gh_username()),
-  gh_username = input("GitHub username:", default = username(),
-    when = function(a) a$gh_username == "" &&
-      isTRUE(a$create_git_repo) && isTRUE(a$create_gh_repo)),
 
   push_to_github = confirm("Push initial version to GitHub?",
     default = FALSE, when = function(a) isTRUE(a$create_gh_repo)),
@@ -89,7 +87,7 @@ default_maintainer <- function(answers) {
 #' @importFrom whoami gh_username
 
 default_url <- function(answers) {
-  gh <- try_quietly(gh_username()) %||% "<gh-username>"
+  gh <- answers$gh_username
   name <- answers$name
   paste0("https://github.com/", gh, "/", name)
 }

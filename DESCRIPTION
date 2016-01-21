@@ -12,3 +12,4 @@ Imports:
     httr,
     falsy,
     whoami
+RoxygenNote: 5.0.1
