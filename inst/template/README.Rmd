@@ -38,4 +38,4 @@ library({{ name }})
 
 ## License
 
-{{ license }} © [{{ author }}](https://github.com/{{ gh_username }}).
+{{ licensenofile }} © {{{ copyrightholder }}
