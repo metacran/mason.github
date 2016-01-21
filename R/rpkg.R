@@ -19,8 +19,12 @@ survey <- questions(
   author = input("Author:", default = default_author()),
   maintainer = input("Maintainer:", default = default_maintainer(answers)),
   description = input("Description:", default = answers$title),
+
   license = choose("License:", licenses, default = "MIT + file LICENSE"),
   need_license = constant(value = grepl(" file LICENSE", answers$license)),
+  licensenofile = constant(value = sub(" + file LICENSE", "", answers$license)),
+  copyrightholder = input("Copyright holder(s):", default = answers$author,
+    when = function(a) isTRUE(a$needs_license)),
 
   gh_username = input("GitHub username:", default = username(),
     nextline = FALSE),
